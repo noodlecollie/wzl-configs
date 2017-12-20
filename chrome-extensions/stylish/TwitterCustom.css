@@ -1,0 +1,24 @@
+li.moments.js-moments-tab
+{
+    display: none;
+}
+
+.WtfLargeCarouselStreamItem
+{
+    display: none;
+}
+
+div [data-component-context="suggest_activity_tweet"]
+{
+    display: none;
+}
+
+div [data-component-context="suggest_recycled_tweet_inline"]
+{
+    display: none;
+}
+
+.Footer-adsModule
+{
+    display: none;
+}

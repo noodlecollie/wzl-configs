@@ -8,12 +8,9 @@ li.moments.js-moments-tab
     display: none;
 }
 
-div [data-component-context="suggest_activity_tweet"]
-{
-    display: none;
-}
-
-div [data-component-context="suggest_recycled_tweet_inline"]
+div [data-component-context="suggest_activity_tweet"],
+div [data-component-context="suggest_recycled_tweet_inline"],
+div [data-component-context="generic_activity_MagicRecFirstDegreeTweetRecap"]
 {
     display: none;
 }

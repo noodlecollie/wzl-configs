@@ -10,7 +10,9 @@ li.moments.js-moments-tab
 
 div [data-component-context="suggest_activity_tweet"],
 div [data-component-context="suggest_recycled_tweet_inline"],
-div [data-component-context="generic_activity_MagicRecFirstDegreeTweetRecap"]
+div [data-component-context="generic_activity_MagicRecFirstDegreeTweetRecap"],
+div [data-component-context="generic_activity_MagicRecF1LikedAPhoto"],
+div [data-component-context="generic_activity_MagicRecF1RetweetedAPhoto"]
 {
     display: none;
 }

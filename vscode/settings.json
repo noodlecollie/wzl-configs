@@ -1,0 +1,26 @@
+{
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+
+    "editor.renderWhitespace": "boundary",
+    "editor.insertSpaces": false,
+    "editor.autoClosingBrackets": false,
+    "editor.cursorBlinking": "smooth",
+    "editor.dragAndDrop": false,
+    "editor.rulers": [ 120 ],
+    "editor.smoothScrolling": true,
+
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    "workbench.editor.openPositioning": "last",
+    "workbench.statusBar.feedback.visible": false,
+
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+
+    "terminal.integrated.confirmOnExit": true,
+    "terminal.integrated.enableBell": true,
+
+    "git.promptToSaveFilesBeforeCommit": true
+}

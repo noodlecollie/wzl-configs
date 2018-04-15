@@ -9,6 +9,7 @@
     "editor.dragAndDrop": false,
     "editor.rulers": [ 120 ],
     "editor.smoothScrolling": true,
+    "editor.selectionClipboard": false, // No middle click paste on Linux
 
     "diffEditor.ignoreTrimWhitespace": false,
 
@@ -24,3 +25,4 @@
 
     "git.promptToSaveFilesBeforeCommit": true
 }
+

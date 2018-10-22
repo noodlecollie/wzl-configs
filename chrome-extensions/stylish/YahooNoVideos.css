@@ -1,4 +1,5 @@
-#emptyFolderVideo.onepage .viewingpane .videopane
+#emptyFolderVideo.onepage .viewingpane .videopane,
+div [data-test-id="video-container"]
 {
     display: none;
 }

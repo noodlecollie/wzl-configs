@@ -42,3 +42,9 @@ div [data-component-context="generic_activity_TwitterversaryYear10"]
 {
     display: none;
 }
+
+div [data-testid="primaryColumn"] div [data-testid="UserCell"],
+div [data-testid="primaryColumn"] a [href="/who_to_follow"]
+{
+    display: none;
+}

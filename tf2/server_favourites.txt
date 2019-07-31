@@ -1,0 +1,15 @@
+Skial VSH: 137.74.91.223:27015
+Orange X x50: 217.20.115.23:27325
+Delfy Class Wars: 31.186.251.170:27015
+Panda-Community Deathrun: 193.192.59.191:27095
+TF2Maps US: usa.tf2maps.net:27015
+TF2Mapa EU: eu.tf2maps.net:27015
+NH Badwater/Goldrush: 104.153.104.102:27015
+NH 2Fort: 162.248.89.104:27015
+NH Payload Extreme: 104.153.104.118:27015
+NH Turbine: 104.153.104.157:27015
+NH Banana Bay: 104.153.104.241:27015
+NH Orange+: 162.248.89.70:27015
+NH Prophunt: 162.248.89.51:27015
+NH Mercenary Park: 104.153.104.119:27015
+NH Warpath Elite: 104.153.104.103:27015

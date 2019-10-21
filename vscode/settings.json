@@ -4,12 +4,16 @@
 
     "editor.renderWhitespace": "boundary",
     "editor.insertSpaces": false,
-    "editor.autoClosingBrackets": false,
+    "editor.autoClosingBrackets": "never",
     "editor.cursorBlinking": "smooth",
     "editor.dragAndDrop": false,
     "editor.rulers": [ 120 ],
     "editor.smoothScrolling": true,
     "editor.selectionClipboard": false, // No middle click paste on Linux
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.snippetSuggestions": "none", // Autocompleting "if...else" drives me mad
+
+    "window.titleBarStyle": "custom",
 
     "diffEditor.ignoreTrimWhitespace": false,
 
@@ -23,6 +27,10 @@
     "terminal.integrated.confirmOnExit": true,
     "terminal.integrated.enableBell": true,
 
-    "git.promptToSaveFilesBeforeCommit": true
-}
+    "git.promptToSaveFilesBeforeCommit": true,
+    "git.inputValidation": "off",
 
+    "C_Cpp.default.defines": [ "DEBUG", "_DEBUG" ],
+    "C_Cpp.default.cppStandard": "c++11",
+    "C_Cpp.default.cStandard": "c99"
+}

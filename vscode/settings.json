@@ -5,6 +5,7 @@
     "editor.renderWhitespace": "boundary",
     "editor.insertSpaces": false,
     "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
     "editor.cursorBlinking": "smooth",
     "editor.dragAndDrop": false,
     "editor.rulers": [ 120 ],

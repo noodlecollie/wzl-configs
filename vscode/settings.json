@@ -29,7 +29,7 @@
     "terminal.integrated.confirmOnExit": true,
     "terminal.integrated.enableBell": true,
 
-    "git.promptToSaveFilesBeforeCommit": true,
+    "git.promptToSaveFilesBeforeCommit": "always",
     "git.inputValidation": "off",
 
     "C_Cpp.default.defines": [ "DEBUG", "_DEBUG" ],

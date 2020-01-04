@@ -1,6 +1,6 @@
 // Steps:
-// - Go to http://savevideo.me/ and paste the URL of the video you want to download.
-// - Open the "special URL" the page gives you (which is just an embed page for the video on DailyMotion).
+// - Add "embed" into the DailyMotion URL so that it reads https://www.dailymotion.com/embed/video/...
+//   (where the "..." is the video URL code).
 // - Paste the entire contents of this file into the Javascript console in the browser.
 // - Download the video from the page you're taken to.
 
@@ -43,7 +43,7 @@ function saveVideo()
                 }
 
                 output = output +
-                    this.key_string.charAt(enc1) + 
+                    this.key_string.charAt(enc1) +
                     this.key_string.charAt(enc2) +
                     this.key_string.charAt(enc3) +
                     this.key_string.charAt(enc4);
@@ -60,7 +60,7 @@ function saveVideo()
             var i = 0;
 
             input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-            
+
             while (i < input.length)
             {
                 enc1 = this.key_string.indexOf(input.charAt(i++));
@@ -71,9 +71,9 @@ function saveVideo()
                 chr1 = (enc1 << 2) | (enc2 >> 4);
                 chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
                 chr3 = ((enc3 & 3) << 6) | enc4;
-                
+
                 output = output + String.fromCharCode(chr1);
-                
+
                 if (enc3 != 64)
                 {
                     output = output + String.fromCharCode(chr2);
@@ -86,7 +86,7 @@ function saveVideo()
             }
             output = base64.utf8_decode(output); return output;
         },
-        
+
         utf8_encode: function (string)
         {
             string = string.replace(/\r\n/g, "\n");
@@ -94,7 +94,7 @@ function saveVideo()
 
             for (var n = 0; n < string.length; n++)
             {
-                var c = string.charCodeAt(n); 
+                var c = string.charCodeAt(n);
                 if (c < 128)
                 {
                     utf_string += String.fromCharCode(c);
@@ -111,7 +111,7 @@ function saveVideo()
                     utf_string += String.fromCharCode((c & 63) | 128);
                 }
             }
-            
+
             return utf_string;
         },
 
@@ -120,7 +120,7 @@ function saveVideo()
             var string = "";
             var i = 0;
             var c = c1 = c2 = 0;
-            
+
             while (i < utf_string.length)
             {
                 c = utf_string.charCodeAt(i);
@@ -142,7 +142,7 @@ function saveVideo()
                     i += 3;
                 }
             }
-            
+
             return string;
         }
     };
@@ -156,13 +156,13 @@ function saveVideo()
     hidden_field_1.setAttribute("name", "url");
     hidden_field_1.setAttribute("value", document.location);
     form.appendChild(hidden_field_1);
-    
+
     var hidden_field_2 = document.createElement("input");
     hidden_field_2.setAttribute("type", "hidden");
     hidden_field_2.setAttribute("name", "src");
     hidden_field_2.setAttribute("value", base64.encode(document.body.innerHTML));
     form.appendChild(hidden_field_2);
-    
+
     document.body.appendChild(form);
     form.submit();
 }

@@ -5,6 +5,7 @@
     "editor.renderWhitespace": "boundary",
     "editor.insertSpaces": false,
     "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
     "editor.cursorBlinking": "smooth",
     "editor.dragAndDrop": false,
     "editor.rulers": [ 120 ],
@@ -12,6 +13,7 @@
     "editor.selectionClipboard": false, // No middle click paste on Linux
     "editor.cursorSmoothCaretAnimation": true,
     "editor.snippetSuggestions": "none", // Autocompleting "if...else" drives me mad
+    "editor.autoSurround": "never",
 
     "window.titleBarStyle": "custom",
 
@@ -27,7 +29,7 @@
     "terminal.integrated.confirmOnExit": true,
     "terminal.integrated.enableBell": true,
 
-    "git.promptToSaveFilesBeforeCommit": true,
+    "git.promptToSaveFilesBeforeCommit": "always",
     "git.inputValidation": "off",
 
     "C_Cpp.default.defines": [ "DEBUG", "_DEBUG" ],

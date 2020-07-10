@@ -1,0 +1,12 @@
+Add the following to the .gitconfig:
+
+[diff]
+    tool = meld
+[difftool]
+    prompt = false
+[difftool "meld"]
+    cmd = \"C:\\Program Files (x86)\\Meld\\Meld.exe\" \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = meld
+[mergetool "meld"]
+	cmd = \"C:\\Program Files (x86)\\Meld\\Meld.exe\" --diff \"$LOCAL\" \"$MERGED\" \"$REMOTE\" --output \"$MERGED\"

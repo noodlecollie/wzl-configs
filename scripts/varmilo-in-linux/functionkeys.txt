@@ -1,0 +1,5 @@
+Create or edit /etc/modprobe.d/hid_apple.conf, and add the line:
+
+options hid_apple fnmode=2
+
+For more info: https://wiki.archlinux.org/index.php/Apple_Keyboard

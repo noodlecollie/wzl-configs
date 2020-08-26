@@ -2,4 +2,11 @@ Create or edit /etc/modprobe.d/hid_apple.conf, and add the line:
 
 options hid_apple fnmode=2
 
-For more info: https://wiki.archlinux.org/index.php/Apple_Keyboard
+Then run:
+
+sudo update-initramfs -u -k all
+
+For more info:
+
+https://wiki.archlinux.org/index.php/Apple_Keyboard
+https://unix.stackexchange.com/questions/121395/on-an-apple-keyboard-under-linux-how-do-i-make-the-function-keys-work-without-t

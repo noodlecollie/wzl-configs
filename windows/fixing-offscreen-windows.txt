@@ -1,0 +1,1 @@
+Use Alt-Spacebar to open the system menu for the window, after which you can select "Move".

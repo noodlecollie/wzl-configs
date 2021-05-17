@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+SCRIPT_DIR="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" &> /dev/null && pwd )"
 
 # These things don't die easily, and for some reason KDE refuses to
 # kill them off properly even if this command is run on logout, so

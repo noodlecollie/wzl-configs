@@ -32,6 +32,7 @@
 
     "terminal.integrated.confirmOnExit": true,
     "terminal.integrated.enableBell": true,
+    "terminal.integrated.tabs.hideCondition": "never",
 
     "git.promptToSaveFilesBeforeCommit": "always",
     "git.inputValidation": "off",

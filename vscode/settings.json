@@ -15,6 +15,10 @@
     "editor.snippetSuggestions": "none", // Autocompleting "if...else" drives me mad
     "editor.autoSurround": "never",
 
+    // If I've cloned a repo, I trust the code. 99% of the time I work with
+    // compiled languaged anyway, so this can get lost.
+    "security.workspace.trust.enabled": false,
+
     "window.titleBarStyle": "custom",
 
     "diffEditor.ignoreTrimWhitespace": false,
@@ -28,6 +32,7 @@
 
     "terminal.integrated.confirmOnExit": true,
     "terminal.integrated.enableBell": true,
+    "terminal.integrated.tabs.hideCondition": "never",
 
     "git.promptToSaveFilesBeforeCommit": "always",
     "git.inputValidation": "off",

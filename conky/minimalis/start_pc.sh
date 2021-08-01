@@ -9,4 +9,4 @@ SCRIPT_DIR="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" &> /dev/nu
 killall conky
 
 sleep 10
-conky -c "$SCRIPT_DIR/conky_right.conf" &
+conky -c "$SCRIPT_DIR/conky_right_pc.conf" &

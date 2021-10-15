@@ -1,6 +1,5 @@
 {
-    "telemetry.enableTelemetry": false,
-    "telemetry.enableCrashReporter": false,
+    "telemetry.telemetryLevel": "off",
 
     "editor.renderWhitespace": "boundary",
     "editor.insertSpaces": false,
@@ -30,7 +29,7 @@
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
 
-    "terminal.integrated.confirmOnExit": true,
+    "terminal.integrated.confirmOnExit": "hasChildProcesses",
     "terminal.integrated.enableBell": true,
     "terminal.integrated.tabs.hideCondition": "never",
 

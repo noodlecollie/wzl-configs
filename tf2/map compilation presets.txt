@@ -1,0 +1,30 @@
+Default
+$bsp_exe -leaktest -game $gamedir $path\$file
+$vis_exe -game $gamedir $path\$file
+$light_exe -game $gamedir $path\$file
+Copy File $path\$file.bsp $bspdir\$file.bsp
+
+Fast
+$bsp_exe -leaktest -game $gamedir $path\$file
+$vis_exe -fast -game $gamedir $path\$file
+$light_exe -bounce 2 -noextra -game $gamedir $path\$file
+Copy File $path\$file.bsp $bspdir\$file.bsp
+
+HDR Full Compile
+$bsp_exe -leaktest -game $gamedir $path\$file
+$vis_exe -game $gamedir $path\$file
+$light_exe -both -game $gamedir $path\$file
+Copy File $path\$file.bsp $bspdir\$file.bsp
+
+HDR Full Compile -final (slow!)
+$bsp_exe -leaktest -game $gamedir $path\$file
+$vis_exe -game $gamedir $path\$file
+$light_exe -both -final -game $gamedir $path\$file
+Copy File $path\$file.bsp $bspdir\$file.bsp
+
+Only Entities
+$bsp_exe -onlyents -game $gamedir $path\$file
+Copy File $path\$file.bsp $bspdir\$file.bsp
+
+Run Map Windowed (FHD)
+-sw -w 1920 -h 1080 -dev -console -allowdebug -game $gamedir +map $file

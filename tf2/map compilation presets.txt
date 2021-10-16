@@ -16,7 +16,7 @@ $vis_exe -game $gamedir $path\$file
 $light_exe -both -game $gamedir $path\$file
 Copy File $path\$file.bsp $bspdir\$file.bsp
 
-HDR Full Compile -final (slow!)
+HDR Full Compile (Final)
 $bsp_exe -leaktest -game $gamedir $path\$file
 $vis_exe -game $gamedir $path\$file
 $light_exe -both -final -game $gamedir $path\$file
@@ -27,4 +27,4 @@ $bsp_exe -onlyents -game $gamedir $path\$file
 Copy File $path\$file.bsp $bspdir\$file.bsp
 
 Run Map Windowed (FHD)
--sw -w 1920 -h 1080 -dev -console -allowdebug -game $gamedir +map $file
+$game_exe -sw -w 1920 -h 1080 -dev -console -allowdebug -game $gamedir +map $file

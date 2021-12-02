@@ -38,5 +38,7 @@
 
     "C_Cpp.default.defines": [ "DEBUG", "_DEBUG" ],
     "C_Cpp.default.cppStandard": "c++11",
-    "C_Cpp.default.cStandard": "c99"
+    "C_Cpp.default.cStandard": "c99",
+
+    "extensions.ignoreRecommendations": true
 }

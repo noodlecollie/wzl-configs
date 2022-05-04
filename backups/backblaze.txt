@@ -1,0 +1,3 @@
+Set up according to https://medium.com/codex/linux-backup-with-backblaze-b2-and-email-notifications-3acdb5282fa1
+
+For the mail stuff to work, I had to follow this instead: https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/

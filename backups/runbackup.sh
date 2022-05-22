@@ -58,7 +58,7 @@ ${output1}
 ----------------------------------------
 Snapshot history:
 ----------------------------------------
-$(restic -r b2:wzl-vault:main-desktop-docs/ snapshots)
+$(restic -r b2:wzl-vault:main-desktop-docs/ snapshots | tail)
 "
 
 echo "Subject: ${subject}"

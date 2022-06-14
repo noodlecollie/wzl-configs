@@ -43,5 +43,9 @@
 
     "cmake.configureOnOpen": false,
 
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+
+    // That's the last time I spend 10 minutes in a headless panic because
+    // some extension decided to update to a new, buggier version underneath my feet.
+    "extensions.autoUpdate": false
 }

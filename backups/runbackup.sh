@@ -16,7 +16,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 if [[ -f "$SCRIPT_DIR/credentials_env" ]];
 then
 	source "$SCRIPT_DIR/credentials_env"
-	command1="restic -r b2:wzl-vault:main-desktop-docs/ backup /media/vesper/Backups/ 2>&1"
+	command1="restic -r b2:wzl-vault:main-desktop-docs/ backup /media/vesper/Backups/ --exclude-file="$SCRIPT_DIR/restic-exclude.txt" 2>&1"
 	output1=$(eval "${command1}")
 	result1=$?
 else

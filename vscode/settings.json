@@ -13,6 +13,7 @@
     "editor.cursorSmoothCaretAnimation": true,
     "editor.snippetSuggestions": "none", // Autocompleting "if...else" drives me mad
     "editor.autoSurround": "never",
+    "editor.inlayHints.enabled": "off",
 
     // If I've cloned a repo, I trust the code. 99% of the time I work with
     // compiled languaged anyway, so this can get lost.

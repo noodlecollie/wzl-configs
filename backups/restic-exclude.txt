@@ -1,3 +1,5 @@
 /media/vesper/Backups/$$RECYCLE.BIN/
 /media/vesper/Backups/.Trash*/
 /media/vesper/Backups/System Volume Information/
+/media/vesper/Backups/Home/Audio/Spitfire Audio Library
+/media/vesper/Backups/Home/Audio/Vital Library

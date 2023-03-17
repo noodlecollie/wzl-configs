@@ -10,7 +10,7 @@
     "editor.rulers": [ 120 ],
     "editor.smoothScrolling": true,
     "editor.selectionClipboard": false, // No middle click paste on Linux
-    "editor.cursorSmoothCaretAnimation": true,
+    "editor.cursorSmoothCaretAnimation": "on",
     "editor.snippetSuggestions": "none", // Autocompleting "if...else" drives me mad
     "editor.autoSurround": "never",
     "editor.inlayHints.enabled": "off",

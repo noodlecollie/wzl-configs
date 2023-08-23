@@ -1,2 +1,6 @@
 This page is very useful:
 https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/
+
+However, it is now dead, so I looked up an archived version and copied it here.
+
+Note that additionally, for Proton Mail bridge v3, I had to go into the advanced settings, export the TLS certificates, copy cert.pem to /home/vesper/.config/protonmail/bridge-v3/, and then create a symbolic link to this file. The previous cert.pem does not seem to exist there by default any more. The file should be protected using chmod 0600 and chown root:root.

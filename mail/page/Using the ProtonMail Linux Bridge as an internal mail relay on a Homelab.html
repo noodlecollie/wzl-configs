@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app28.us.archive.org';v.server_ms=3109;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/wombat.js" charset="utf-8"></script>
+<script>window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={"autoplay":"on","unmuteOverlay":"hidden"};</script>
+<script type="text/javascript" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/ruffle.js" defer="true"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/","20220517012443","https://web.archive.org/","web","/_static/",
+	      "1652750683");
+</script>
+<link rel="stylesheet" type="text/css" href="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/banner-styles.css">
+<link rel="stylesheet" type="text/css" href="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/iconochive.css">
+<!-- End Wayback Rewrite JS Include -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <title>Using the ProtonMail Linux Bridge as an internal mail relay on a Homelab.</title>
+    <link href="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/style.min.css" rel="stylesheet" type="text/css">
+    <link href="https://web.archive.org/web/20220517012443im_/https://tech.davidfield.co.uk/favicon.png" rel="shortcut icon">
+    <link rel="icon" href="https://web.archive.org/web/20220517012443im_/https://tech.davidfield.co.uk/favicon.png" type="image/png">
+    <link rel="canonical" href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/amp/">
+
+    <meta property="og:site_name" content="Tech Blog Posts - David Field">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Using the ProtonMail Linux Bridge as an internal mail relay on a Homelab.">
+    <meta property="og:description" content="You may read this title and think &quot;That's oddly specific&quot; which to a degree it is. What am I doing here?What I'm going to go through is to set up the ProtonMail Linux bridge in CLI mode as a service that will sit and listen on port 1025 for">
+    <meta property="og:url" content="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/">
+    <meta property="og:image" content="https://web.archive.org/web/20220517012443im_/https://tech.davidfield.co.uk/content/images/2022/02/protonmail.jpg">
+    <meta property="article:published_time" content="2022-02-21T14:18:21.000Z">
+    <meta property="article:modified_time" content="2022-02-21T14:18:21.000Z">
+    <meta property="article:tag" content="bash">
+    <meta property="article:tag" content="blog">
+    <meta property="article:tag" content="homelab">
+    <meta property="article:tag" content="howto">
+    <meta property="article:tag" content="linux">
+    <meta property="article:tag" content="selfhosted">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Using the ProtonMail Linux Bridge as an internal mail relay on a Homelab.">
+    <meta name="twitter:description" content="You may read this title and think &quot;That's oddly specific&quot; which to a degree it is. What am I doing here?What I'm going to go through is to set up the ProtonMail Linux bridge in CLI mode as a service that will sit and listen on port 1025 for">
+    <meta name="twitter:url" content="https://web.archive.org/web/20220517012443im_/https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/">
+    <meta name="twitter:image" content="https://web.archive.org/web/20220517012443im_/https://tech.davidfield.co.uk/content/images/2022/02/protonmail.jpg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="davidfield">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="bash, blog, homelab, howto, linux, selfhosted">
+    <meta name="twitter:site" content="@mightywomble">
+    <meta property="og:image:width" content="750">
+    <meta property="og:image:height" content="200">
+
+    <script type="application/ld+json">
+{
+    "@context": "https://web.archive.org/web/20220517012443/https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog Posts - David Field",
+        "url": "https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/favicon.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "davidfield",
+        "image": {
+            "@type": "ImageObject",
+            "url": "//web.archive.org/web/20220517012443/https://www.gravatar.com/avatar/312470863342bdbf66f8f1186a173463?s=250&d=mm&r=x",
+            "width": 250,
+            "height": 250
+        },
+        "url": "https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/author/davidfield/",
+        "sameAs": []
+    },
+    "headline": "Using the ProtonMail Linux Bridge as an internal mail relay on a Homelab.",
+    "url": "https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/",
+    "datePublished": "2022-02-21T14:18:21.000Z",
+    "dateModified": "2022-02-21T14:18:21.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/content/images/2022/02/protonmail.jpg",
+        "width": 750,
+        "height": 200
+    },
+    "keywords": "bash, blog, homelab, howto, linux, selfhosted",
+    "description": "You may read this title and think &quot;That&#x27;s oddly specific&quot; which to a degree it\nis.\n\nWhat am I doing here?\nWhat I&#x27;m going to go through is to set up the ProtonMail Linux bridge in CLI\nmode as a service that will sit and listen on port 1025 for SMTP. I&#x27;m then going\nto use postfix as a mail relay on port 25 (not encrypted) to move mails through\nthe ProtonMail bridge to my proton mail accounts.\n\nI&#x27;m using port 25 as the mail relay is internal only, it&#x27;s not public-facing and\nit&#x27;s not needed to be en",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.43">
+    <link rel="alternate" type="application/rss+xml" title="Tech Blog Posts - David Field" href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/rss/">
+    <script defer="defer" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/portal.min.js" data-ghost="https://tech.davidfield.co.uk/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <script defer="defer" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/cards.min.js"></script><style>:root {--ghost-accent-color: #15171A;}</style>
+    <link rel="stylesheet" type="text/css" href="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/cards.min.css">
+    <meta name="theme" content="Saga v2.1.3">
+<style>
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */</style><style>
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */</style></head>
+<body class="post-template tag-bash tag-blog tag-homelab tag-howto tag-linux tag-selfhosted"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" style="display: block; direction: ltr; height: 68px;" lang="en">
+</div><div id="wm-ipp-print">The Wayback Machine -
+https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(700,27,25,2,"web","https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/","20220517012443",1996,"/_static/",["/_static/css/banner-styles.css?v=S1zqJCYt","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header role="banner" id="header" class="header -dark cover-image animated fadeIn" style="background-image: url(/web/20220517012443im_/https://tech.davidfield.co.uk/content/images/size/w2000/2022/02/protonmail.jpg)">
+        <section id="top-navigation" class="header--top" aria-label="Top navigation">
+            <section aria-labelledby="blog-title">
+    <a id="blog-title" class="blog-title" href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/">
+            Tech Blog Posts - David Field
+    </a>
+
+</section>
+<nav class="primary-menu" aria-label="Primary menu"><ul>
+    <li class="nav-home"><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/"><span class="label">Home</span></a></li>
+    <li class="nav-photos"><a href="https://web.archive.org/web/20220517012443/http://photos.photowalkmyworld.com/"><span class="label">Photos</span></a></li>
+    <li class="nav-reddit"><a href="https://web.archive.org/web/20220517012443/https://www.reddit.com/user/mightywomble"><span class="label">Reddit</span></a></li>
+    <li class="nav-linkedin"><a href="https://web.archive.org/web/20220517012443/https://www.linkedin.com/in/mightywomble/"><span class="label">Linkedin</span></a></li>
+    <li class="nav-twitter"><a href="https://web.archive.org/web/20220517012443/https://twitter.com/mightywomble"><span class="label">Twitter</span></a></li>
+    <li class="nav-mastodon"><a href="https://web.archive.org/web/20220517012443/https://twit.social/web/@mightywomble"><span class="label">Mastodon</span></a></li>
+</ul></nav>        </section>
+        <section id="hero" class="hero post-meta">
+            <div class="hero-content">
+                <h1 id="62138c75ff2dfb3cdcc00c56-title" class="post-title animated fadeInUp delay-1">Using the ProtonMail Linux Bridge as an internal mail relay on a Homelab.</h1>
+                <div class="post-data">
+                    <p class="date animated fadeInUp delay-2">Posted by <span class="author"><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/author/davidfield/" title="Author page">davidfield</a></span> <a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/"><time class="timesince" datetime="2022-02-21T14:18" title="2022-02-21 14:18">3 months ago</time></a></p>
+                    <p class="post--read-time animated fadeInUp delay-3">7 min read</p>
+                        <ul class="post--tags animated fadeInUp delay-4">
+                            <li><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/tag/bash/" title="Tag page" class="tag tag-61ddd3301cebe47fdb68d2c9 bash">bash</a></li>
+                            <li><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/tag/blog/" title="Tag page" class="tag tag-61ddd3301cebe47fdb68d2c3 blog">blog</a></li>
+                            <li><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/tag/homelab/" title="Tag page" class="tag tag-61ddd3301cebe47fdb68d2b9 homelab">homelab</a></li>
+                            <li><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/tag/howto/" title="Tag page" class="tag tag-61ddd3301cebe47fdb68d2ba howto">howto</a></li>
+                            <li><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/tag/linux/" title="Tag page" class="tag tag-61ddd3301cebe47fdb68d2bf linux">linux</a></li>
+                            <li><a href="https://web.archive.org/web/20220517012443/https://tech.davidfield.co.uk/tag/selfhosted/" title="Tag page" class="tag tag-61ddd3301cebe47fdb68d2c8 selfhosted">selfhosted</a></li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+    </header>
+    <main id="main" class="main">
+        <article class="animated fadeIn delay-5 post tag-bash tag-blog tag-homelab tag-howto tag-linux tag-selfhosted" aria-labelledby="62138c75ff2dfb3cdcc00c56-title">
+            <div class="content">
+                    <p>You may read this title and think "That's oddly specific" which to a degree it is.</p><h3 id="what-am-i-doing-here">What am I doing here?</h3><p>What
+ I'm going to go through is to set up the ProtonMail Linux bridge in CLI
+ mode as a service that will sit and listen on port 1025 for SMTP. I'm
+then going to use postfix as a mail relay on port 25 (not encrypted) to
+move mails through the ProtonMail bridge to my proton mail accounts.</p><p>I'm
+ using port 25 as the mail relay is internal only, it's not
+public-facing and it's not needed to be encrypted. I also can't spend
+hours working out certificates for other ports.</p><h3 id="why-am-i-doing-this">Why am I doing this?</h3><p>Up
+ until last night I was hosting my own Axigen mail server for 3 domains
+running in a cloud-hosted VM. If you're looking for a well thought out
+free (for 5 domains) Mailserver I would strongly recommend Axigen. </p><p>I
+ migrated to ProtonMail mainly on Peer pressure however I was using it a
+ while back, and I wanted to make things a little more secure.</p><p>However,
+ the issue I have is a simple one. I run a lot of homelab type services
+which send out emails as notifications. In order to do this, I need to
+be able to point them to something, if the webserver is not there and
+ProtonMail doesn't support relay then I needed some way of sending
+notifications to these new Protonmail emails.</p><p>This is how I did that.</p><h3 id="server">Server</h3><p>Ubuntu 21.04, 20.04, 21.10</p><h2 id="how-did-i-do-this">How did I do this?</h2><h3 id="install-bridge">Install Bridge</h3><p>Install prerequisite software</p><!--kg-card-begin: markdown--><pre><code>sudo apt-get install debsig-verify debian-keyring gdebi-core pass
+</code></pre>
+<!--kg-card-end: markdown--><p>There is no point going to all the
+trouble of doing this in a secure method with ProtonMail if we are just
+doing to download a Deb file and trust it. </p><p>Download <a href="https://protonmail.com/download/bridge_pubkey.gpg">the public key</a> `bridge_pubkey.gpg`</p><p>Import the public key into keyring by following these instructions:</p><!--kg-card-begin: markdown--><pre><code>gpg --dearmor --output debsig.gpg bridge_pubkey.gpg
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>sudo mkdir -p /usr/share/debsig/keyrings/E2C75D68E6234B07
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>sudo mv debsig.gpg /usr/share/debsig/keyrings/E2C75D68E6234B07
+</code></pre>
+<!--kg-card-end: markdown--><p>Download the <a href="https://protonmail.com/download/bridge.pol">policy file</a> `bridge.pol`</p><p>Install the policy file:</p><!--kg-card-begin: markdown--><pre><code>sudo mkdir -p /etc/debsig/policies/E2C75D68E6234B07
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>sudo cp bridge.pol /etc/debsig/policies/E2C75D68E6234B07
+</code></pre>
+<!--kg-card-end: markdown--><p>Check `deb` file by running:</p><!--kg-card-begin: markdown--><pre><code>debsig-verify protonmail-bridge_1.2.6-1_amd64.deb
+</code></pre>
+<!--kg-card-end: markdown--><p>If the check passes, you should see this:</p><!--kg-card-begin: markdown--><pre><code>debsig: Verified package from 'Proton Technologies AG (ProtonMail Bridge developers) &lt;bridge@protonmail.ch&gt;' (Proton Technologies AG)
+</code></pre>
+<!--kg-card-end: markdown--><p>Install the package using your package manager:</p><!--kg-card-begin: markdown--><pre><code>sudo gdebi protonmail-bridge_*.deb
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="setup-bridge-via-the-gui">Setup Bridge via the GUI</h3><p>Open the Application in Ubuntu and login with your ProtonMail login</p><figure class="kg-card kg-image-card"><img src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-13.png" class="kg-image" alt="" loading="lazy" srcset="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-13_002.png 600w, Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-13.png 954w" sizes="(min-width: 720px) 720px" width="954" height="582"></figure><p>You can see your ProtonMail Bridge settings and credentials under <strong><strong>Mailbox details</strong></strong>. You will use these credentials to configure your postfix later.</p><figure class="kg-card kg-image-card"><img src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-14_002.png" class="kg-image" alt="" loading="lazy" srcset="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-14_003.png 600w, Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-14.png 1000w, Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-14_002.png 1200w" sizes="(min-width: 720px) 720px" width="1200" height="649"></figure><h3 id="setup-bridge-cli">Setup Bridge CLI</h3><p>Create a passphrase-free GPG key non-interactively</p><pre><code class="language-bash">gpg --batch --passphrase '' --quick-gen-key 'ProtonMail Bridge' default default never</code></pre><p>The above command creates a basic GPG key, and its ID is <em>ProtonMail Bridge</em>. This key does not have a passphrase, so <code>pass</code> does not need to ask users for a passphrase whenever it tries to use the key. </p><p>The key does not expire. </p><p>Don’t use this key for other things (such as encryption, signing, identity, etc.). It is not safe.</p><p>This creates a new password database in <code>pass</code> (<code>pass</code> calls the database <em>password store</em>). And the GPG key <em>ProtonMail Bridge</em> can be used to open the database.</p><pre><code class="language-bash">pass init "ProtonMail Bridge"</code></pre><p>If
+ the server is multi-purpose or even a machine for daily work, don’t
+save other passwords/credentials in this database. This database does
+not need any passphrase to open due to the passphrase-free GPG key.</p><p>After this step, we can continue on the old way of running ProtonMail Bridge in the background as described above </p><p>Alternatively, we can use the new way described in the following steps.</p><p>Start ProtonMail Bridge in command-line &amp; interactive mode and set it up</p><p>The new way to run ProtonMail Bridge in the background does not allow users to interact with the <code>protonmail-bridge</code> daemon. We have to set up <code>protonmail-bridge</code> interactively in advance. First, start the <code>protonmail-bridge</code> in command-line mode:</p><pre><code class="language-bash">protonmail-bridge --cli</code></pre><p>Start ProtonMail Bridge in command-line mode</p><p>Login to our ProtonMail account with <code>login</code> command and record the username and password of the local SMTP server they are needed for the postfix install later.</p><p>After setting up <code>protonmail-bridge</code> and obtaining the required information (SMTP username &amp; password), we can now use <code>exit</code> to exit the interactive interface.<br>Create a service file</p><!--kg-card-begin: markdown--><pre><code>sudo vi /etc/systemd/system/protonmailbridge.service
+</code></pre>
+<!--kg-card-end: markdown--><p>Add the following</p><!--kg-card-begin: markdown--><pre><code>[Unit]
+Description=Protonmail client bridge service
+
+[Service]
+Type=simple
+StandardOutput=journal
+ExecStart=/usr/bin/protonmail-bridge --noninteractive
+User=&lt;name of ubuntu user you login with&gt;
+
+[Install]
+WantedBy=default.target
+</code></pre>
+<!--kg-card-end: markdown--><p>As an example for the user line</p><!--kg-card-begin: markdown--><pre><code>User=&lt;name of ubuntu user you login with&gt;
+</code></pre>
+<!--kg-card-end: markdown--><p>I use</p><!--kg-card-begin: markdown--><pre><code>User=mightywomble
+</code></pre>
+<!--kg-card-end: markdown--><p>Start and enable the service</p><!--kg-card-begin: markdown--><pre><code>sudo systemctl enable protonmailbridge
+sudo systemctl start protonmailbridge
+</code></pre>
+<!--kg-card-end: markdown--><p>Its worth noting here, if you are running the GUI version of the bridge you may see this</p><!--kg-card-begin: markdown--><pre><code>○ protonmailbridge.service - Protonmail client bridge service
+ Loaded: loaded (/etc/systemd/system/protonmailbridge.service; disabled; vendor preset: enabled)
+ Active: inactive (dead)
+
+Feb 21 11:11:57 david-desktop systemd[1]: Started Protonmail client bridge service.
+Feb 21 11:11:58 david-desktop systemd[1]: protonmailbridge.service: Deactivated successfully.
+</code></pre>
+<!--kg-card-end: markdown--><p>This is ok if you get the following when you run</p><!--kg-card-begin: markdown--><pre><code>ss -plnt | grep 1025
+</code></pre>
+<!--kg-card-end: markdown--><!--kg-card-begin: markdown--><pre><code>LISTEN 0      4096                                   127.0.0.1:1025       0.0.0.0:*    users:(("proton-bridge",pid=2914797,fd=18))
+</code></pre>
+<!--kg-card-end: markdown--><p><strong>What do we have?</strong></p><ul><li>ProtonMail Bridge installed</li><li>ProtonMail Bridge running as GUI or a Service</li><li>Port listening on 1025/TCP</li><li>User and Password for Postfix.</li></ul><h3 id="install-and-setup-postfix">Install and Setup Postfix</h3><p>Install postfix </p><!--kg-card-begin: markdown--><pre><code>sudo apt install mailutils -y
+</code></pre>
+<!--kg-card-end: markdown--><p>Edit the postfix main.cf file</p><!--kg-card-begin: markdown--><pre><code>sudo nano /etc/postfix/main.cf
+</code></pre>
+<!--kg-card-end: markdown--><p>You might want to use find and replace to make sure none of these are already in the file. </p><p>This will be so edit it</p><!--kg-card-begin: markdown--><pre><code>relayhost = [127.0.0.1]:1025
+</code></pre>
+<!--kg-card-end: markdown--><p>Add the following at the end of the file</p><!--kg-card-begin: markdown--><pre><code>smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_CApath = /etc/ssl/certs
+smtp_use_tls = yes
+sender_canonical_maps = regexp:/etc/postfix/canonical
+</code></pre>
+<!--kg-card-end: markdown--><p>The <strong>canonical</strong> file needs to be updated so we have a default from enabled</p><!--kg-card-begin: markdown--><pre><code>sudo nano /etc/postfix/canonical
+</code></pre>
+<!--kg-card-end: markdown--><p>Add the following</p><!--kg-card-begin: markdown--><pre><code>/.*/ protonmail email here
+</code></pre>
+<!--kg-card-end: markdown--><p>Example</p><!--kg-card-begin: markdown--><pre><code>/.*/ dmf@protonmail.com
+</code></pre>
+<!--kg-card-end: markdown--><p>This can also be a custom domain if you are using them</p><p>Next the SMTP account details we got from ProtonMails (which will be different from the login account details.)</p><!--kg-card-begin: markdown--><pre><code>sudo nano /etc/postfix/sasl_passwd
+</code></pre>
+<!--kg-card-end: markdown--><p>Add the following</p><!--kg-card-begin: markdown--><pre><code>[127.0.0.1]:1025 dmf@protonmail.com:P@ssw0rdPr0videdByBridge
+</code></pre>
+<!--kg-card-end: markdown--><p>Don't just copy and paste this line, use the details from the ProtonMail bridge. </p><p>Secure this file</p><!--kg-card-begin: markdown--><pre><code>sudo chmod 0600 /etc/postfix/sasl_passwd
+sudo chown root:root /etc/postfix/sasl_passwd
+</code></pre>
+<!--kg-card-end: markdown--><p>Run Postmap to generate the DB file</p><!--kg-card-begin: markdown--><pre><code>postmap /etc/postfix/sasl_passwd
+</code></pre>
+<!--kg-card-end: markdown--><p>Since postfix will be connecting to the
+bridge with STARTSSL, it will need to validate the bridge certificate.
+Symlinking the self-signed certificate will be necessary:</p><!--kg-card-begin: markdown--><pre><code>sudo ln -s /home/user under which bridge was setup/.config/protonmail/bridge/cert.pem /etc/ssl/certs/protonmail-bridge.pem
+</code></pre>
+<!--kg-card-end: markdown--><p>example</p><!--kg-card-begin: markdown--><pre><code>sudo ln -s /home/dmf/.config/protonmail/bridge/cert.pem /etc/ssl/certs/protonmail-bridge.pem
+</code></pre>
+<!--kg-card-end: markdown--><h3 id="restart">Restart</h3><p>At this point your postfix config has been complete and postfix needs a restart</p><!--kg-card-begin: markdown--><pre><code>sudo systemctl restart postfix
+</code></pre>
+<!--kg-card-end: markdown--><p>Check the service has started and the logs if you have issues</p><!--kg-card-begin: markdown--><pre><code>sudo systemctl status postfix
+
+sudo tail /var/log/mail.err
+
+sudo tail /var/log/mail.log
+</code></pre>
+<!--kg-card-end: markdown--><p>It's also worth noting that if the
+services using this relay are using different servers it would be useful
+ to open up the networks in /etc/postfix/main.cf</p><p>Edit the line</p><!--kg-card-begin: markdown--><pre><code>mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+</code></pre>
+<!--kg-card-end: markdown--><p>Add extra networks as needed</p><!--kg-card-begin: markdown--><pre><code>mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.0.0/24 10.10.0.0/16
+</code></pre>
+<!--kg-card-end: markdown--><p>Restart postfix for this to take effect. </p><p><strong>What have we done</strong></p><ul><li>Installed Postfix</li><li>Setup the main.cf to use SASL</li><li>Setup the postfix server as a relay server</li><li>Provided credentials for postfix to connect to the ProtonMail relay server.</li></ul><h3 id="test">Test</h3><p>Head over to an internal service and set it up pointing to the IP or DNS and Port 25 for your relay server</p><p>As an example here is the SabNZBd Email Notifications section </p><figure class="kg-card kg-image-card"><img src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-15.png" class="kg-image" alt="" loading="lazy" srcset="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-15_002.png 600w, Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/image-15.png 911w" sizes="(min-width: 720px) 720px" width="911" height="833"></figure><p>Use the command to see what is going on and any errors.</p><!--kg-card-begin: markdown--><pre><code>sudo tail -f /var/log/mail.log
+</code></pre>
+<!--kg-card-end: markdown--><h2 id="thoughts">Thoughts</h2><p>This is a lot simpler internally than running a mail server, it adds a degree of security for mails leaving the Lan. </p><p>While I'd probably like this to all be done over secure ports and not 25, it's behind closed doors so I'm not overly worried.</p><p>Works on the Tailscale network too.</p><h2 id="references">References</h2><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://protonmail.com/support/knowledge-base/installing-bridge-linux-deb-file/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to install ProtonMail Bridge for Linux using a DEB file - ProtonMail Support</div><div class="kg-bookmark-description">This article explains how to verify and install the DEB package on your Linux device.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/apple-touch-icon.png" alt=""><span class="kg-bookmark-author">ProtonMail Support</span></div></div><div class="kg-bookmark-thumbnail"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></div></a></figure><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://web.archive.org/web/20220517012443/https://protonmail.com/support/knowledge-base/protonmail-bridge-install/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">How to install ProtonMail Bridge - ProtonMail Support</div><div class="kg-bookmark-description">Setup guide for configuring ProtonMail Bridge in Windows, macOS, and Linux.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/apple-touch-icon.png" alt=""><span class="kg-bookmark-author">ProtonMail Support</span><span class="kg-bookmark-publisher">Douglas Crawford</span></div></div><div class="kg-bookmark-thumbnail"><img src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/bridge-1.png" alt=""></div></a></figure><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://web.archive.org/web/20220517012443/https://web.archive.org/web/20210122213129/https://pychao.com/2020/06/10/update-on-using-protonmail-bridge-on-headless-wordpress-linux-servers/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Update on using ProtonMail Bridge on headless WordPress/Linux servers | import pyChao</div><div class="kg-bookmark-description">Ever
+ since I posted these two posts (here and here) of using ProtonMail
+Bridge on a headless WordPress/Linux server, ProtonMail Bridge has
+somehow changed a…Continue ReadingUpdate on using ProtonMail Bridge on
+headless WordPress/Linux servers</div><div class="kg-bookmark-metadata"><span class="kg-bookmark-author">import pyChao</span><span class="kg-bookmark-publisher">PY Chuang</span></div></div><div class="kg-bookmark-thumbnail"><img src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/fdce316317f9f597ab90aa8a518e2a69.jpeg" alt=""></div></a></figure><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://web.archive.org/web/20220517012443/https://www.romanbezlepkin.com/articles/protonmail-bridge-smtp-relay"><div class="kg-bookmark-content"><div class="kg-bookmark-title">Running a headless ProtonMail Bridge with a SMTP Relay for homelab use</div><div class="kg-bookmark-description">Running SMTP mail relay to ProtonMail Bridge in homelab applications</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/android-icon-192x192.png" alt=""></div></div></a></figure>
+            </div>
+        </article>
+    </main>
+
+
+    <footer role="contentinfo" class="footer animated hidden@print fadeIn" id="footer">
+        <div class="colophon">Published with <a href="https://web.archive.org/web/20220517012443/http://ghost.org/" title="Ghost"><i class="ghost-logo"></i></a></div>
+    </footer>
+    <script type="text/javascript" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/Saga.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="Using%20the%20ProtonMail%20Linux%20Bridge%20as%20an%20internal%20mail%20relay%20on%20a%20Homelab_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-156207147-1');
+</script>
+
+
+<div id="ghost-portal-root"></div></body></html>
+<!--
+     FILE ARCHIVED ON 01:24:43 May 17, 2022 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 20:13:24 Aug 23, 2023.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 142.017 (11)
+  exclusion.robots: 0.271
+  exclusion.robots.policy: 0.255
+  cdx.remote: 0.105
+  esindex: 0.014
+  LoadShardBlock: 99.727 (3)
+  PetaboxLoader3.datanode: 60.271 (4)
+  load_resource: 2944.967
+  PetaboxLoader3.resolve: 2913.774
+-->

@@ -1,3 +1,178 @@
-Set up according to https://medium.com/codex/linux-backup-with-backblaze-b2-and-email-notifications-3acdb5282fa1
+Set up according to https://medium.com/codex/linux-backup-with-backblaze-b2-and-email-notifications-3acdb5282fa1. Medium is shit and limits views, so I've copied the content below.
 
-For the mail stuff to work, I had to follow this instead: https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/
+Yes, when it asks for the username:password@smtpserver, it really does have to be jonathan.poncelet@protonmail.com:password@127.0.0.1:port. The first @ in there seems to be parsed fine as part of the username.
+
+For the mail stuff to work, I had to follow this instead: https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/. See the mail folder in this repo for a copy of the page.
+
+-----
+
+My wife and I have been longtime users of Backblaze to backup all our personal files on our MacBooks.
+
+So when I recently built myself a Linux desktop for the first time in a while, I wanted an equally painless backup solution. Unfortunately, the market for easy-automated-backup-apps seems to be limited to Windows and macOS. So I had to cancel my Backblaze personal backup account and go looking for a Linux-friendly option.
+
+There are a thousand-and-one backup solutions for Linux, but all of them are targeted at sysadmins—nothing as “fire-and-forgettable” as I was used to. On the bright side, once I got around to setting up one of these “some assembly required” solutions, my monthly bill for cloud storage was considerably cheaper than it had been before, so there is that.
+
+I settled on a solution that requires minimal care and feeding, based on four components:
+
+    Backblaze B2 as the cloud storage service, and
+    restic to manage the backup snapshots,
+    a systemd timer to trigger daily updates, and
+    mailx to send me daily backup success messages.
+
+I didn’t expect to stay with the Backblaze brand (I thought I had no reason to), but B2 has become something of a sensation in recent years for offering a cloud storage service similar to AWS s3, but at lower cost.
+Create a Backblaze Storage Bucket
+
+First, create a B2 account and set up a bucket (cloud storage jargon for “folder”) for your backups.
+
+It’s easy to do this via the B2 web GUI. You can also use the b2 CLI client if you’re so inclined.
+Creating a storage bucket in B2.
+
+You’ll also need to set up an app key. Copy down the Key ID and Key for later.
+Set up Restic Snapshots
+
+Now we need an app that knows how to
+
+    scan your system for changed files
+    create a snapshot of those changes using copy-on-write
+    manage your history of snapshots
+
+Restic is currently a popular open-source solution for this niche. It has a nice, unified CLI interface, and is known for supporting a wide variety of storage backends (including B2). Since it’s popular and well-supported, it’s easy to install from your distro’s package manager (in my case pacman):
+
+sudo pacman -S restic
+
+In all honesty, we want a tool that also triggers nightly backups and sends you notifications if anything goes wrong. But AFAIK no such tool exists for Linux: snapshotting tools abound, but the assumption is (in pious adherence to UNIX tradition) that you will string them together with something else for triggers and notifications (see below).
+
+With Restic, you first initialize a (password-protected) backup repository file with restic init, then add to it with the restic backup command. To create a repository inside a B2 bucket, we prefix the command with -r b2:bucketname:file like so.
+
+Here’s how I set up a backup repo for my desktop (affectionately known as alfred):
+
+export B2_ACCOUNT_ID=<keyID>
+export B2_ACCOUNT_KEY=<key>restic -r b2:mybucket-desktop-backups:alfred/ init
+
+The <keyID> and <key> values need to be the value Backblaze showed you when you created the key.
+
+Now you can manually trigger a backup of your system to B2 with commands like this:
+
+restic -r b2:mybucket-desktop-backups:alfred/ backup ~/Documents
+
+And you can always see your history of stored snapshots with the snapshots command:
+
+restic -r b2:mybucket-desktop-backups:alfred/ snapshots
+
+Setup Mailx
+
+Repeat after me: manual backups are worthless. Let’s set up a backup script so we can automate our snapshots.
+
+Because backups are so important, however, we need notifications so we know it’s working and/or if something goes wrong. The mailx command is a nice, lightweight way to enable this (without jumping into the full-blown sendmail abyss).
+
+sudo pacman -S mailx
+
+Now we need to configure it with a legitimate SMTP server by appending the following lines to /etc/mail.rc. I’ve got a GMail account, so I’ll take advantage of GMail’s SMTP service:
+
+set v15-compat
+
+set mta=smtp://username:[app-password]@smtp.gmail.com smtp-use-starttls
+set from="Eric 'Siggy' Scott <username@gmail.com>"
+
+where [app-password] is a unique 16-character password my Google account let me generate. This allows me to bypass 2FA.
+
+Now we can send mail like so:
+
+echo "Test test test" | mailx --subject "Test from Alfred" destinationaddress@gmail.com
+
+Create the Backup Script
+
+Putting it together, here’s the full script that I want to have triggered daily.
+
+It backs up two directories on my system (my Documents folder, plus the repos directory where I keep all my cloned repositories).
+
+Then it constructs and sends an email message with either a success message or a failure message, depending on the return code of the restic calls:
+
+I opted to place this in /usr/bin/backup_script.sh for convenience.
+Trigger: Create a Systemd Timer
+
+Again, manual backups are worthless, so we want this script to execute automatically.
+
+The contemporary answer to this on Linux system is to use a systemd timer. For the uninitiated, this is the modern equivalent of the classiccron job—now that our benevolent overlordsystemd has become the god-demiurge at the heart of all Linux distros. You can find an in-depth tutorial on systemd timers here.
+
+But basically, we need to create two configuration files: a service and a timer.
+The backup.service Unit File
+
+First, we’ll build a systemd unit file that calls the backup script. Unit files the basic subroutines that form the building blocks ofsystemd jobs and services.
+
+Place the following in the file /etc/systemd/system/backup.service
+
+[Unit]
+Description=Restic backup script
+Wants=backup.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/backup_script.sh
+User=yourusername
+
+[Install]
+WantedBy=multi-user.target
+
+Note: it’s important to include User=yourusername (in my case User=eric), otherwise our backup script will run as root—which besides being generally scary will cause restic to be unable to use its caching facility, causing your backup to take hours instead of seconds every single time!
+
+To ensure the backup service works, we can trigger it manually like so:
+
+systemctl start backup.service
+
+The backup.timer Unit File
+
+Second, we’ll set up a unit file that uses a timer to trigger the backup service once each night at 2:00AM.
+
+Put this one at /etc/systemd/system/backup.timer:
+
+[Unit]
+Description=Daily Backup Script
+Requires=backup.service
+
+[Timer]
+Unit=backup.service
+OnCalendar=*-*-* 02:00:00
+; Run immediately if the system was off
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+Especially important here is the Persisent=true line. Without it, the timer won’t be triggered if the machine is powered off or asleep at 2AM. Since this is my workstation, not a server, that’s almost always the case!
+
+Persistent=true ensures that the job will run at the first opportunity after 2AM. So, in practice, my backup runs at about 7am each day when I first sit down at the machine.
+Activate the Timer
+
+systemctl start backup.timer
+
+Or more importantly, enable the timer so it will activate each time the system is rebooted:
+
+systemctl enable backup.timer
+
+And voila! Messages like this are now part of my morning routine:
+Debugging
+
+All the logs for our unit files are collected by journald, systemd's lietenant (and the replacement for the older syslog tradition).
+
+Here are some commands you may find helpful while trying to ensure that your systemd service and timer runs correctly:
+
+journalctl -S today -u backup.service
+journalctl -t systemd | grep backup.service
+journalctl -t systemd | grep backup.timer
+journalctl -t backup_script.sh
+
+Aside: Managing System Config with Git
+
+To set this up, we touched or created quite a few config files and scripts. Linux is all about freedom to configure, but it makes me greatly uncomfortable to accrue lots of unrecorded and highly specific system tweaks like this.
+
+    They are time-consuming to implement
+    They can be nuked by system updates unexpectedly
+    They all disappear from the universe when I reinstall my OS
+    It’s hard to remember which config files carry important customizations, and which are just boiler plate or cruft (I’m looking at you, dot-files in ~/!)
+
+The problem of course gets much worse if you dive into really configuration-heavy activities—like setting up a lightweight window manager or such, rather than opting for whatever Gnome’s defaults are.
+
+For these reasons, I’m a big fan of tracking all of my manual Linux customizations in a git repository. Believe it or not, I actually make my root directory one giant git repo. I use a .gitignore file, however, so that by default nothing is tracked unless I explicitly commit it.
+
+Here’s a SO post with how to do it. The trick is to separate your repo’s git-dir from the work-tree

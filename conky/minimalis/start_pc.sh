@@ -6,7 +6,7 @@ SCRIPT_DIR="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" &> /dev/nu
 # kill them off properly even if this command is run on logout, so
 # I'm putting it here to kill off any residual processes before
 # starting new ones.
-killall conky
+pkill conky
 
 sleep 10
 conky -c "$SCRIPT_DIR/conky_right_pc.conf" &

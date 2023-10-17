@@ -5,6 +5,8 @@
     "editor.insertSpaces": false,
     "editor.autoClosingBrackets": "never",
     "editor.autoClosingQuotes": "never",
+    "editor.autoClosingComments": "never",
+    "editor.autoSurround": "never",
     "editor.cursorBlinking": "smooth",
     "editor.dragAndDrop": false,
     "editor.rulers": [ 120 ],
@@ -12,7 +14,6 @@
     "editor.selectionClipboard": false, // No middle click paste on Linux
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.snippetSuggestions": "none", // Autocompleting "if...else" drives me mad
-    "editor.autoSurround": "never",
     "editor.inlayHints.enabled": "off",
 
     // If I've cloned a repo, I trust the code. 99% of the time I work with
@@ -44,9 +45,8 @@
 
     "cmake.configureOnOpen": false,
 
-    "extensions.ignoreRecommendations": true,
-
     // That's the last time I spend 10 minutes in a headless panic because
     // some extension decided to update to a new, buggier version underneath my feet.
-    "extensions.autoUpdate": false
+    "extensions.autoUpdate": false,
+    "extensions.ignoreRecommendations": true
 }

@@ -3,21 +3,19 @@
 
     "editor.renderWhitespace": "boundary",
     "editor.insertSpaces": false,
-    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingBrackets": "never", // No auto-completion of anything
     "editor.autoClosingQuotes": "never",
     "editor.autoClosingComments": "never",
     "editor.autoSurround": "never",
+    "editor.snippetSuggestions": "none",
     "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
     "editor.dragAndDrop": false,
     "editor.rulers": [ 120 ],
     "editor.smoothScrolling": true,
     "editor.selectionClipboard": false, // No middle click paste on Linux
-    "editor.cursorSmoothCaretAnimation": "on",
-    "editor.snippetSuggestions": "none", // Autocompleting "if...else" drives me mad
     "editor.inlayHints.enabled": "off",
 
-    // If I've cloned a repo, I trust the code. 99% of the time I work with
-    // compiled languaged anyway, so this can get lost.
     "security.workspace.trust.enabled": false,
 
     "window.titleBarStyle": "custom",
@@ -44,9 +42,10 @@
     "C_Cpp.default.cStandard": "c99",
 
     "cmake.configureOnOpen": false,
+    "cmake.options.statusBarVisibility": "icon",
 
-    // That's the last time I spend 10 minutes in a headless panic because
-    // some extension decided to update to a new, buggier version underneath my feet.
+    // Extensions should notify me before they apply an update.
+    // I don't want to suddenly find something doesn't work properly.
     "extensions.autoUpdate": false,
     "extensions.ignoreRecommendations": true
 }

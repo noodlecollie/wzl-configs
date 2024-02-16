@@ -3,3 +3,5 @@
 /media/vesper/Backups/System Volume Information/
 /media/vesper/Backups/Home/Audio/Spitfire Audio Library/
 /media/vesper/Backups/Home/Audio/Vital Library/
+/media/vesper/Backups/Home/Music/DJ/
+/media/vesper/Backups/Home/Music/Draft/

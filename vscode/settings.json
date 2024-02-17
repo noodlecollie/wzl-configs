@@ -42,8 +42,9 @@
     "C_Cpp.default.cStandard": "c99",
 
     "cmake.configureOnOpen": false,
-    "cmake.options.statusBarVisibility": "compact",
+    "cmake.options.statusBarVisibility": "visible",
     "cmake.showOptionsMovedNotification": false,
+    "cmake.useCMakePresets": "never",
 
     // Extensions should notify me before they apply an update.
     // I don't want to suddenly find something doesn't work properly.

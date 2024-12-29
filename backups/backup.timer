@@ -1,0 +1,12 @@
+[Unit]
+Description=Daily Backup Script
+Requires=backup.service
+
+[Timer]
+Unit=backup.service
+OnCalendar=*-*-* 02:00:00
+; Run immediately if the system was off
+Persistent=true
+
+[Install]
+WantedBy=timers.target

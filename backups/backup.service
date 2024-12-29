@@ -1,0 +1,11 @@
+[Unit]
+Description=Restic backup script
+Wants=backup.timer
+
+[Service]
+Type=oneshot
+ExecStart=/home/vesper/Documents/wzl-configs/backups/runbackup.sh
+User=vesper
+
+[Install]
+WantedBy=multi-user.target

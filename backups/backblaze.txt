@@ -4,6 +4,9 @@ Yes, when it asks for the username:password@smtpserver, it really does have to b
 
 For the mail stuff to work, I had to follow this instead: https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/. See the mail folder in this repo for a copy of the page.
 
+Note also that an example fstab entry to auto-mount the CoolStorage drive is:
+UUID=3CD6BEF33E59283A /media/vesper/Backups ntfs-3g defaults 0 0
+
 -----
 
 My wife and I have been longtime users of Backblaze to backup all our personal files on our MacBooks.
@@ -47,7 +50,8 @@ With Restic, you first initialize a (password-protected) backup repository file 
 Here’s how I set up a backup repo for my desktop (affectionately known as alfred):
 
 export B2_ACCOUNT_ID=<keyID>
-export B2_ACCOUNT_KEY=<key>restic -r b2:mybucket-desktop-backups:alfred/ init
+export B2_ACCOUNT_KEY=<key>
+restic -r b2:mybucket-desktop-backups:alfred/ init
 
 The <keyID> and <key> values need to be the value Backblaze showed you when you created the key.
 
@@ -93,7 +97,7 @@ Trigger: Create a Systemd Timer
 
 Again, manual backups are worthless, so we want this script to execute automatically.
 
-The contemporary answer to this on Linux system is to use a systemd timer. For the uninitiated, this is the modern equivalent of the classiccron job—now that our benevolent overlordsystemd has become the god-demiurge at the heart of all Linux distros. You can find an in-depth tutorial on systemd timers here.
+The contemporary answer to this on Linux system is to use a systemd timer. For the uninitiated, this is the modern equivalent of the classic cron job—now that our benevolent overlord systemd has become the god-demiurge at the heart of all Linux distros. You can find an in-depth tutorial on systemd timers here.
 
 But basically, we need to create two configuration files: a service and a timer.
 The backup.service Unit File

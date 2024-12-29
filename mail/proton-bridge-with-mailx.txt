@@ -4,3 +4,20 @@ https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-m
 However, it is now dead, so I looked up an archived version and copied it here.
 
 Note that additionally, for Proton Mail bridge v3, I had to go into the advanced settings, export the TLS certificates, copy cert.pem to /home/vesper/.config/protonmail/bridge-v3/, and then create a symbolic link to this file. The previous cert.pem does not seem to exist there by default any more. The file should be protected using chmod 0600 and chown root:root.
+
+----------
+
+EVERY time I have to set up my system again, this absolutely fucks me off because it takes AGES to get it to work.
+
+A quick summary for the authentication-related steps:
+
+- Make sure all the settings in the main.cf file are what the article says they should be.
+- Additionally, make sure smtpd_tls_security_level=encrypt and smtp_tls_security_level=encrypt are set.
+  These should be "encrypt", not "may".
+- The sasl_passwd file should be:
+    [127.0.0.1]:1025 <your email address>:<bridge password here>
+  Beware that the Bridge application might just change the password randomly
+  (it did for me and I don't know why).
+- If you change the sasl_passwd file, RE-RUN `sudo postmap /etc/postfix/sasl_passwd`
+  (sudo is required), or the password in the database will not match the config.
+- An easy way to send a test e-mail is `echo "Test Postfix" | mail -s "Postfix Test" <your email address>`

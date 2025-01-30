@@ -3,7 +3,10 @@ https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-m
 
 However, it is now dead, so I looked up an archived version and copied it here.
 
-Note that additionally, for Proton Mail bridge v3, I had to go into the advanced settings, export the TLS certificates, copy cert.pem to /home/vesper/.config/protonmail/bridge-v3/, and then create a symbolic link to this file. The previous cert.pem does not seem to exist there by default any more. The file should be protected using chmod 0600 and chown root:root.
+Note that additionally, for Proton Mail bridge v3, I had to go into the advanced settings, export the TLS certificates,
+copy cert.pem to /home/vesper/.config/protonmail/bridge-v3/, and then create a symbolic link to this file. The previous
+cert.pem does not seem to exist there by default any more. The file should be protected using chmod 0600 and
+chown root:root.
 
 ----------
 
@@ -11,6 +14,7 @@ EVERY time I have to set up my system again, this absolutely fucks me off becaus
 
 A quick summary for the authentication-related steps:
 
+- mailutils might not install postfix - you may also need `apt install postfix`
 - Make sure all the settings in the main.cf file are what the article says they should be.
 - Additionally, make sure smtpd_tls_security_level=encrypt and smtp_tls_security_level=encrypt are set.
   These should be "encrypt", not "may".

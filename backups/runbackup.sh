@@ -64,4 +64,4 @@ $(restic -r b2:wzl-vault:main-desktop-docs/ snapshots | tail)
 echo "Subject: ${subject}"
 echo "Message: ${message}"
 
-echo "${message}" | mailx --subject "${subject}" jonathan.poncelet@protonmail.com
+echo "${message}" | mailx -s "${subject}" jonathan.poncelet@protonmail.com

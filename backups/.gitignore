@@ -1,2 +1,2 @@
-credentials_env*
+*.env
 mount/

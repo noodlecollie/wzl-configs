@@ -13,55 +13,61 @@
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
-if [[ -f "$SCRIPT_DIR/credentials_env" ]];
-then
-	source "$SCRIPT_DIR/credentials_env"
-	command1="restic -r b2:wzl-vault:main-desktop-docs/ backup /media/vesper/Backups/ --exclude-file="$SCRIPT_DIR/restic-exclude.txt" 2>&1"
-	output1=$(eval "${command1}")
-	result1=$?
-else
-	command1=""
-	output1="$SCRIPT_DIR/credentials_env does not exist"
-	result1=1
-fi
+run-backup()
+{
+	echo "Backup for ${credentialsFile} has started---$(date)" | mailx -s "${subject}" ${EMAIL_ADDRESS}
 
-# The dude also used the following, but we don't need this right now.
-#
-# command2="restic -r b2:mybucket-desktop-backups:alfred/ backup /home/eric/repos/ 2>&1"
-# output2=$(eval "${command2}")
-# result2=$?
+	local credentialsFile="$1"
 
-message="
-----------Backup Report----------
-$(date)
-"
+	if [[ -f "$SCRIPT_DIR/${credentialsFile}" ]];
+	then
+		source "$SCRIPT_DIR/${credentialsFile}"
+		command1="restic -r ${RESTIC_URL} backup /media/vesper/Backups/ --exclude-file="$SCRIPT_DIR/restic-exclude.txt" 2>&1"
+		output1=$(eval "${command1}")
+		result1=$?
+	else
+		command1=""
+		output1="$SCRIPT_DIR/${credentialsFile} does not exist"
+		result1=1
+	fi
 
-if [[ $result1 != 0 ]]; then
-    message="${message}
-----------------------------------------
-BACKUP FAILED!! See output below.
-----------------------------------------
-"
-    subject="Backup FAILED---$(date)"
-else
-    message="${message}
-----------------------------------------
-Backup SUCCEEDED.
-----------------------------------------
-"
-    subject="Backup successful---$(date)"
-fi
+	message="
+	----------Backup Report----------
+	$(date)
+	"
 
-message="${message}
-\$ ${command1}
-${output1}
-----------------------------------------
-Snapshot history:
-----------------------------------------
-$(restic -r b2:wzl-vault:main-desktop-docs/ snapshots | tail)
-"
+	if [[ $result1 != 0 ]]; then
+		message="${message}
+	----------------------------------------
+	BACKUP FAILED!! See output below.
+	----------------------------------------
+	"
+		subject="${credentialsFile} Backup FAILED---$(date)"
+	else
+		message="${message}
+	----------------------------------------
+	Backup SUCCEEDED.
+	----------------------------------------
+	"
+		subject="${credentialsFile} Backup successful---$(date)"
+	fi
 
-echo "Subject: ${subject}"
-echo "Message: ${message}"
+	message="${message}
+	\$ ${command1}
+	${output1}
+	----------------------------------------
+	Snapshot history:
+	----------------------------------------
+	$(restic -r ${RESTIC_URL} snapshots | tail)
+	"
 
-echo "${message}" | mailx -s "${subject}" jonathan.poncelet@protonmail.com
+	echo "Subject: ${subject}"
+	echo "Message: ${message}"
+
+	echo "${message}" | mailx -s "${subject}" ${EMAIL_ADDRESS}
+}
+
+run-backup "backblaze.env"
+
+# TODO: Get this set up with SSH keys. I'm ill and CBA right now.
+# run-backup "nas.env"

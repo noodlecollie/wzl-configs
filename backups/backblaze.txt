@@ -11,6 +11,12 @@ mount-remote-fs.sh can be used to test the credentials.
 Note also that an example fstab entry to auto-mount the CoolStorage drive is:
 UUID=3CD6BEF33E59283A /media/vesper/Backups ntfs-3g defaults 0 0
 
+*.env files should set at least:
+
+    export RESTIC_PASSWORD=... # Password to use for the Restic repo, in password manager
+    export RESTIC_URL=... # URL to the Restic repo, in password manager
+    export EMAIL_ADDRESS=... # E-mail address to send results to
+
 -----
 
 On Fedora, the process below failed, because systemd could not launch the backup script. I suspect this was because

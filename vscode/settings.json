@@ -1,6 +1,5 @@
 {
     "telemetry.telemetryLevel": "off",
-
     "editor.renderWhitespace": "boundary",
     "editor.insertSpaces": false,
     "editor.autoClosingBrackets": "never", // No auto-completion of anything
@@ -11,43 +10,50 @@
     "editor.cursorBlinking": "smooth",
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.dragAndDrop": false,
-    "editor.rulers": [ 120 ],
+    "editor.rulers": [
+        120
+    ],
     "editor.smoothScrolling": true,
     "editor.selectionClipboard": false, // No middle click paste on Linux
     "editor.inlayHints.enabled": "off",
-
     "security.workspace.trust.enabled": false,
-
     "window.titleBarStyle": "custom",
-
-    "diffEditor.ignoreTrimWhitespace": false,
-
     "workbench.editor.openPositioning": "last",
     "workbench.statusBar.feedback.visible": false,
-
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
-
     "terminal.integrated.confirmOnExit": "hasChildProcesses",
-    "terminal.integrated.enableBell": true,
     "terminal.integrated.tabs.hideCondition": "never",
-
     "git.promptToSaveFilesBeforeCommit": "always",
-    "git.inputValidation": "off",
+    "git.inputValidation": true,
     "git.confirmSync": false,
-
-    "C_Cpp.default.defines": [ "DEBUG", "_DEBUG" ],
+    "C_Cpp.default.defines": [
+        "DEBUG",
+        "_DEBUG"
+    ],
     "C_Cpp.default.cppStandard": "c++11",
     "C_Cpp.default.cStandard": "c99",
-
     "cmake.configureOnOpen": false,
     "cmake.options.statusBarVisibility": "visible",
     "cmake.showOptionsMovedNotification": false,
     "cmake.useCMakePresets": "never",
-
     // Extensions should notify me before they apply an update.
     // I don't want to suddenly find something doesn't work properly.
     "extensions.autoUpdate": false,
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "cmake.showConfigureWithDebuggerNotification": false,
+    "accessibility.signals.terminalBell": {
+        "sound": "on"
+    },
+    "terminal.integrated.enableVisualBell": true,
+    "cmake.pinnedCommands": [
+        "workbench.action.tasks.configureTaskRunner",
+        "workbench.action.tasks.runTask"
+    ],
+    "debug.onTaskErrors": "showErrors",
+    "chat.commandCenter.enabled": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "chat.agent.enabled": false,
+    "telemetry.feedback.enabled": false,
 }

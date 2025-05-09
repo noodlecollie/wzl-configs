@@ -14,6 +14,8 @@ EVERY time I have to set up my system again, this absolutely fucks me off becaus
 
 A quick summary for the authentication-related steps:
 
+- If the Bridge GUI complains about not being able to find a password manager, make sure
+  to have run the commands from the Setup Bridge CLI section.
 - mailutils might not install postfix - you may also need `apt install postfix`
 - Make sure all the settings in the main.cf file are what the article says they should be.
 - Additionally, make sure smtpd_tls_security_level=encrypt and smtp_tls_security_level=encrypt are set.

@@ -4,8 +4,31 @@ Yes, when it asks for the username:password@smtpserver, it really does have to b
 
 For the mail stuff to work, I had to follow this instead: https://tech.davidfield.co.uk/using-the-protonmail-linux-bridge-as-an-internal-mail-relay/. See the mail folder in this repo for a copy of the page.
 
+For an example of what credentials_env should look like, check the comments in runbackup.sh.
+Note: don't quote the password when setting the env var, or escaped characters might not work.
+mount-remote-fs.sh can be used to test the credentials.
+
 Note also that an example fstab entry to auto-mount the CoolStorage drive is:
 UUID=3CD6BEF33E59283A /media/vesper/Backups ntfs-3g defaults 0 0
+
+*.env files should set at least:
+
+    export RESTIC_PASSWORD=... # Password to use for the Restic repo, in password manager
+    export RESTIC_URL=... # URL to the Restic repo, in password manager
+    export EMAIL_ADDRESS=... # E-mail address to send results to
+
+-----
+
+On Fedora, the process below failed, because systemd could not launch the backup script. I suspect this was because
+my home directory was readable only by me (as it should be), and that meant the script could not be seen by systemd.
+Although the service should have been run as my user, and so should have been able to access my home directory,
+I suspect that the executable referred to by ExecStart is launched by the system, and subsequently runs under my
+user account with the relevant permissions. Therefore, systemd must be able to see the executable to be launched,
+but once it's launched, it will operate as the specified user.
+
+This means that instead of specifying ExecStart=/path/to/script.sh, I have had to swap this to
+ExecStart=/usr/bin/bash /path/to/script.sh. Systemd can see bash in order to launch it, and then bash, running as
+my user, can see the script and execute it.
 
 -----
 
@@ -112,7 +135,7 @@ Wants=backup.timer
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/backup_script.sh
+ExecStart=/usr/bin/bash /path/to/backup_script.sh
 User=yourusername
 
 [Install]

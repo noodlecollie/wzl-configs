@@ -4,7 +4,7 @@ Wants=backup.timer
 
 [Service]
 Type=oneshot
-ExecStart=/home/vesper/Documents/wzl-configs/backups/runbackup.sh
+ExecStart=/usr/bin/bash /home/vesper/Documents/wzl-configs/backups/runbackup.sh
 User=vesper
 
 [Install]

@@ -1,0 +1,1 @@
+winget install "Notepad++.Notepad++" "7zip.7zip" "Open-Shell.Open-Shell-Menu" "LibreWolf.LibreWolf" "Bitwarden.Bitwarden" "Telegram.TelegramDesktop"

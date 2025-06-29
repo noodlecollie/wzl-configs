@@ -56,4 +56,5 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "chat.agent.enabled": false,
     "telemetry.feedback.enabled": false,
+    "terminal.integrated.defaultProfile.linux": "bash",
 }

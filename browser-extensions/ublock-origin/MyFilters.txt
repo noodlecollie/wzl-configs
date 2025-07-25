@@ -2,3 +2,6 @@
 ! 2021-08-30 https://unsplash.com
 unsplash.com##div._1ZjfQ > div
 unsplash.com##._2mKT_ > ._2WvKc._1HV49._3ZLHW
+
+! Bluesky age verification
+||bsky.app/ipcc$replace=/(?<="isAgeRestrictedGeo":)true/false/

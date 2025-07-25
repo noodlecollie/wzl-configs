@@ -1,1 +1,0 @@
-Edit youtube.com PREF cookie: add &f6=42008
